@@ -1,0 +1,24 @@
+----------------------------------------------------
+check O(logN) block sizes:
+
+l = 1; // block size
+while (2l - 1) <= n/2:
+    check for square xx with 2l-1 <= |x| <= 4l-2
+    return true if xx exists
+
+    l = 2*l
+end
+return false
+
+----------------------------------------------------
+
+// need O(n)
+given block size l, check for square xx with 2l-1 <= |x| <= 4l-2:
+
+    for (block of n)  // n/l of these
+        check for square xx // O(l)
+    end
+
+end
+
+
