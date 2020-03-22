@@ -4,33 +4,41 @@
 #include <string>
 using namespace std;
 
-const vector<char> chars = {'a', 'b', 'c', 'd', 'e',
-                            'f', 'g', 'h', 'i', 'j',
-                            'k', 'l', 'm', 'n', 'o',
-                            'p', 'q', 'r', 's', 't',
-                            'u', 'v', 'w', 'x', 'y',
-                            'z'};
-const int alphabet_size = 26;
 
-// usage:
-// ./generate.out number_of_words word_length
+/*
+g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o generate.o generate.cpp
+*/
 int main(int argc, char *argv[])
 {
-    int N = 100;
+    int N = 20;
+    int str_length = 20;
+    int alphabet_size = 20;
+
+    if (argc == 1) {
+        cout << "Usage: ./generate.out num_words word_length alphabet_size\n"
+                "Max alphabet size is 94\n"
+                "Proceeding with defaults\n\n";
+    }       
+
     if (argc > 1) {
         N = stoi(argv[1]);
     }
 
-    int str_length = 5;
     if (argc > 2) {
         str_length = stoi(argv[2]);
+    }
+
+    if (argc > 3) {
+        alphabet_size = stoi(argv[3]);
+        if (alphabet_size > 94) return 1;
     }
 
     cout << N;
     for (int i = 0; i < N; ++i) {
         string out;
         for (int c = 0; c < str_length; ++c) {
-            out.push_back(chars[rand() % alphabet_size]);
+            // shift chars to begin at '!'
+            out.push_back((char) (rand() % alphabet_size + 33));
         }
 
         cout << '\n' << out;
@@ -38,8 +46,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
-/*
-file=generate
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o generate.out project/${file}.cpp
-*/

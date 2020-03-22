@@ -46,7 +46,3 @@ int main()
     }
     return 0;
 }
-
-/*
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.out project/tr_bf.cpp
-*/

@@ -87,8 +87,8 @@ int main()
 }
 
 /*
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.out project/tr.cpp
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.out project/tr_bf.cpp
+g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.out tr.cpp
+g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.out tr_bf.cpp
 file=100w5c4a
 file=100w10c26a
 file=100w20c26a
@@ -126,9 +126,5 @@ NO
 YES
 NO
 YES
-
-in:
-1
-bbbda
 
 */
