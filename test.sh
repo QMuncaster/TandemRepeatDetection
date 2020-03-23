@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.o tr.cpp
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.o tr_bf.cpp

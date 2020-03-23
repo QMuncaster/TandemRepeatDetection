@@ -87,18 +87,8 @@ int main()
 }
 
 /*
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.out tr.cpp
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.out tr_bf.cpp
-file=100w5c4a
-file=100w10c26a
-file=100w20c26a
-file=100w30c26a
-file=100w50c26a
-./tr.out < ${file}.in > ${file}_st.out
-./tr_bf.out < ${file}.in > ${file}_bf.out
-diff ${file}_st.out ${file}_bf.out
-
-grep -c "YES" ${file}_st.out
+g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.o tr.cpp
+g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.o tr_bf.cpp
 
 YES EXAMPLES
 4
