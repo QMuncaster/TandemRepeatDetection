@@ -86,7 +86,6 @@ void build_ptr(string s, int n, int k) {
     }
 }
 
-// s must be pseudo-one indexed, i.e. s[0] should be a dummy character
 void build_nxt(int n) {
     nxt = vector<int>(n + 1, INT32_MAX);
     unordered_map<int, int> ptr_to_i;
@@ -101,6 +100,71 @@ void build_nxt(int n) {
 }
 
 // s must be pseudo-one indexed, i.e. s[0] should be a dummy character
+bool has_square_one_it(string s, int n, int l) {
+    if (l < 1) return false;
+
+    for (int i = 1; i <= n - 3*l + 2; i += l) {
+
+        vector<int> repeats;
+        string block = s.substr(i, l);
+        int block_matches = 0;
+
+        for (int pos = i + 2*l - 1; pos < i + 5*l - 2; ++pos) {
+            if (pos > n) break;
+
+            if (s[pos] == block[block_matches]) {
+                block_matches++;
+
+            } else {
+                block_matches = 0;
+            }
+
+            if (block_matches == l) {
+                repeats.push_back(pos - l + 1);
+                block_matches = 0;
+            }
+        }
+
+        for (size_t j = 0; j < repeats.size(); ++j) {
+            int k = repeats[j];
+
+            int suffix_match_length = 0;
+            int lhp = i - 1;
+            int rhp = k - 1;
+            while (lhp > 0 && rhp > i + l - 1) {
+                if (s[lhp] == s[rhp]) {
+                    suffix_match_length++;
+                    lhp--;
+                    rhp--;
+
+                } else {
+                    break;
+                }
+            }
+
+            int prefix_match_length = 0;
+            lhp = i + l;
+            rhp = k + l;
+            while (rhp <= n && lhp < k) {
+                if (s[lhp] == s[rhp]) {
+                    prefix_match_length++;
+                    lhp++;
+                    rhp++;
+
+                } else {
+                    break;
+                }
+            }
+
+            if (prefix_match_length + suffix_match_length >= k - i - l) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// s must be pseudo-one indexed, i.e. s[0] should be a dummy character
 bool has_square(string s, int n) {
     for (int i = 1; i < n - c + 2; ++i) {
         if (is_square[ptr[i]]) {
@@ -108,7 +172,11 @@ bool has_square(string s, int n) {
         }
     }
 
-    int l = 1;
+    if (has_square_one_it(s, n, c / 4)) return true;
+    if (has_square_one_it(s, n, c / 2)) return true;
+
+    // TODO: speedup
+    int l = c;
     while ((2*l - 1) <= n / 2) {
         for (int i = 1; i <= n - 3*l + 2; i += l) {
 
