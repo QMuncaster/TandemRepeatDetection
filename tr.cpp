@@ -8,7 +8,6 @@ int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(NULL);
 
-
     int num_words;
     cin >> num_words;
 
@@ -25,28 +24,31 @@ int main()
         s.append(zeroIndString);
         int n = s.length() - 1;
 
-
         int l = 1;
         bool found_repeat = false;
         while ((2*l - 1) <= n / 2) {
             for (int i = 1; i <= n - 3*l + 2; i += l) {
-
-                int m = 0;
                 vector<int> repeat_indexes;
                 string block = s.substr(i, l);
+                int block_matches = 0;
 
-                // TODO: implement this part properly
-                for (int start = i + 2*l - 1; start < i + 4*l - 1; ++start) {
-                    if (start > n) break;
+                for (int pos = i + 2*l - 1; pos < i + 5l - 2; ++pos) {
+                    if (pos > n) break;
 
-                    string potential_repeat = s.substr(start, block.length());
-                    if (block == potential_repeat) {
-                        m++;
-                        repeat_indexes.push_back(start);
+                    if (s[pos] == block[block_matches]) {
+                        block_matches++;
+
+                    } else {
+                        block_matches = 0;
+                    }
+
+                    if (block_matches == l) {
+                        repeat_indexes.push_back(pos);
+                        block_matches = 0;
                     }
                 }
 
-                for (int j = 0; j < m; ++j) {
+                for (size_t j = 0; j < repeat_indexes.size(); ++j) {
                     int repeat_start = repeat_indexes[j];
                     int repeat_offset = repeat_start - i;
 
