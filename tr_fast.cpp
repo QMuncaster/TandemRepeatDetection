@@ -175,28 +175,40 @@ bool has_square(string s, int n) {
     if (has_square_one_it(s, n, c / 4)) return true;
     if (has_square_one_it(s, n, c / 2)) return true;
 
-    // TODO: speedup
     int l = c;
     while ((2*l - 1) <= n / 2) {
         for (int i = 1; i <= n - 3*l + 2; i += l) {
 
             vector<int> repeats;
             string block = s.substr(i, l);
-            int block_matches = 0;
 
-            for (int pos = i + 2*l - 1; pos < i + 5*l - 2; ++pos) {
-                if (pos > n) break;
+            // first re-appearance of c in [i + 2l - 1, i + 4l - 2]
+            int f = i;
+            while (f < i + 2*l - 1) {
+                f = nxt[f];
+            }
+            if (f > i + 4*l - 2) continue;
 
-                if (s[pos] == block[block_matches]) {
-                    block_matches++;
+            while (f <= i + 4*l - 2) {
+                // check if matches block in chunks of c
+                int matches = c;
+                int f_block = f + c;
+                while (matches < l) {
+                    if (ptr[f] == ptr[i + matches]) {
+                        f_block += c;
+                        matches += c;
 
-                } else {
-                    block_matches = 0;
+                    } else {
+                        break;
+                    }
+                }
+                if (matches == l) {
+                    repeats.push_back(f_block - l);
                 }
 
-                if (block_matches == l) {
-                    repeats.push_back(pos - l + 1);
-                    block_matches = 0;
+                // repeat for next occurrence
+                while (f <= f_block) {
+                    f = nxt[f];
                 }
             }
 
