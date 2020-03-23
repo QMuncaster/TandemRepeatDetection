@@ -1,6 +1,6 @@
 # Generates test input for 2 long square free words
 
-print'2'
+print'2 3'
 
 n=10**6 # word length
 

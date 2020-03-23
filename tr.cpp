@@ -2,7 +2,6 @@
 #include <vector>
 #include <math.h>
 #include <string>
-#include <tuple>
 using namespace std;
 
 // s must be pseudo-one indexed, i.e. s[0] should be a dummy character
@@ -78,8 +77,8 @@ int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(NULL);
 
-    int num_words;
-    cin >> num_words;
+    int num_words, alphabet_size;
+    cin >> num_words >> alphabet_size;
 
     string pseudosentence;
     getline(cin, pseudosentence);

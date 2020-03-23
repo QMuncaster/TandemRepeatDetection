@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         if (alphabet_size > 94) return 1;
     }
 
-    cout << N;
+    cout << N << ' ' << alphabet_size;
     for (int i = 0; i < N; ++i) {
         string out;
         for (int c = 0; c < str_length; ++c) {
