@@ -2,7 +2,7 @@
 
 print'2'
 
-n=10**4 # word length
+n=10**6 # word length
 
 # SOURCE: https://codegolf.stackexchange.com/a/10606
 # Generates squarefree word using difference of thue-morse sequence

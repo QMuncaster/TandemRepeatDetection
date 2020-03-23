@@ -2,6 +2,7 @@
 #include <vector>
 #include <math.h>
 #include <string>
+#include <tuple>
 using namespace std;
 
 int main()
@@ -28,11 +29,12 @@ int main()
         bool found_repeat = false;
         while ((2*l - 1) <= n / 2) {
             for (int i = 1; i <= n - 3*l + 2; i += l) {
-                vector<int> repeat_indexes;
+
+                vector<int> repeats;
                 string block = s.substr(i, l);
                 int block_matches = 0;
 
-                for (int pos = i + 2*l - 1; pos < i + 5l - 2; ++pos) {
+                for (int pos = i + 2*l - 1; pos < i + 5*l - 2; ++pos) {
                     if (pos > n) break;
 
                     if (s[pos] == block[block_matches]) {
@@ -43,36 +45,43 @@ int main()
                     }
 
                     if (block_matches == l) {
-                        repeat_indexes.push_back(pos);
+                        repeats.push_back(pos - l + 1);
                         block_matches = 0;
                     }
                 }
 
-                for (size_t j = 0; j < repeat_indexes.size(); ++j) {
-                    int repeat_start = repeat_indexes[j];
-                    int repeat_offset = repeat_start - i;
+                for (size_t j = 0; j < repeats.size(); ++j) {
+                    int k = repeats[j];
 
-                    int left = 0;
-                    // will typically terminate much earlier
-                    for (int p = i - 1; p > 0; --p) {
-                        if (s[p] == s[p + repeat_offset]) {
-                            left++;
+                    int suffix_match_length = 0;
+                    int lhp = i - 1;
+                    int rhp = k - 1;
+                    while (lhp > 0 && rhp > i + l - 1) {
+                        if (s[lhp] == s[rhp]) {
+                            suffix_match_length++;
+                            lhp--;
+                            rhp--;
+
                         } else {
                             break;
                         }
                     }
 
-                    int right = 0;
-                    // will typically terminate much earlier
-                    for (int p = repeat_start; p <= n; ++p) {
-                        if (s[p] == s[p - repeat_offset]) {
-                            right++;
+                    int prefix_match_length = 0;
+                    lhp = i + l;
+                    rhp = k + l;
+                    while (rhp <= n && lhp < k) {
+                        if (s[lhp] == s[rhp]) {
+                            prefix_match_length++;
+                            lhp++;
+                            rhp++;
+
                         } else {
                             break;
                         }
                     }
 
-                    if (right + left >= repeat_offset) {
+                    if (prefix_match_length + suffix_match_length >= k - i - l) {
                         found_repeat = true;
                         cout << "YES";
                         break;
@@ -91,6 +100,9 @@ int main()
 /*
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.o tr.cpp
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.o tr_bf.cpp
+
+1
+eabaebae
 
 YES EXAMPLES
 4
