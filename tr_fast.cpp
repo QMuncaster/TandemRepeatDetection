@@ -216,14 +216,19 @@ bool has_square(string s, int n) {
                 int k = repeats[j];
 
                 int suffix_match_length = 0;
-                int lhp = i - 1;
-                int rhp = k - 1;
+                int lhp = i - c;
+                int rhp = k - c;
                 while (lhp > 0 && rhp > i + l - 1) {
-                    if (s[lhp] == s[rhp]) {
+                    if (ptr[lhp] == ptr[rhp]) {
+                        suffix_match_length += c;
+                        lhp -= c;
+                        rhp -= c;
+
+                    } else if (s[lhp] == s[rhp]) {
                         suffix_match_length++;
                         lhp--;
                         rhp--;
-
+                    
                     } else {
                         break;
                     }
@@ -233,7 +238,12 @@ bool has_square(string s, int n) {
                 lhp = i + l;
                 rhp = k + l;
                 while (rhp <= n && lhp < k) {
-                    if (s[lhp] == s[rhp]) {
+                    if (ptr[lhp] == ptr[rhp]) {
+                        prefix_match_length += c;
+                        lhp += c;
+                        rhp += c;
+
+                    } else if (s[lhp] == s[rhp]) {
                         prefix_match_length++;
                         lhp++;
                         rhp++;
