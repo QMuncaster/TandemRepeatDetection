@@ -4,6 +4,27 @@
 #include <string>
 using namespace std;
 
+// 0-indexed string s
+bool has_square(string s) {
+    int n = s.length();
+    for (int i = 1; i <= n/2; ++i) {
+
+        int count_matched = 0;
+        for (int j = i; j < n; ++j) {
+            if (s[j] == s[j - i]) {
+                count_matched++;
+
+                if (count_matched == i) {
+                    return true;
+                }
+            } else {
+                count_matched = 0;
+            }
+        }
+    }
+    return false;
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false); cin.tie(NULL);
@@ -15,34 +36,16 @@ int main()
     getline(cin, pseudosentence);
 
     for (int word = 0; word < num_words; ++word) {
-        if (word > 0) cout << '\n';
-
         string s;
         getline (cin, s);
 
-        int n = s.length();
-        int found_repeat = false;
-        for (int i = 1; i <= n/2; ++i) {
+        if (word > 0) cout << '\n';
 
-            int count_matched = 0;
-            for (int j = i; j < n; ++j) {
-                if (s[j] == s[j - i]) {
-                    count_matched++;
-
-                    if (count_matched == i) {
-                        found_repeat = true;
-                        cout << "YES";
-                        break;
-                    }
-                } else {
-                    count_matched = 0;
-                }
-            }
-            
-            if (found_repeat) break;
+        if (has_square(s)) {
+            cout << "YES";
+        } else {
+            cout << "NO";
         }
-
-        if (!found_repeat) cout << "NO";
     }
     return 0;
 }
