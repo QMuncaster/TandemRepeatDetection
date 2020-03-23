@@ -104,24 +104,25 @@ int main()
 
 /*
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.o tr.cpp
+g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_fast.o tr_fast.cpp
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.o tr_bf.cpp
 
 YES EXAMPLES
-4
+4 26
 abcabab
 eabaebae
 abcabsabs
 xzyabcdabcd
 
 NO EXAMPLES
-4
+4 26
 eabaebad
 abcabsabr
-asdfghjkl;lkjhgfdsa
+asdfghjklxlkjhgfdsa
 oiusoiuoikdajfoiuwqrgqiglukdsjfkldsa
 
 in:
-4
+4 4
 dbadc
 bbbda
 bcadc

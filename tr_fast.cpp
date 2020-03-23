@@ -25,7 +25,7 @@ int c;
 int kPowc;
 vector<string> table;   // 0-indexed
 vector<bool> is_square; // 0-indexed
-vector<int> ptr;  // 1-indexed
+vector<int> ptr; // 1-indexed
 vector<int> nxt; // 1-indexed
 
 // 0-indexed string s
@@ -78,7 +78,7 @@ void build_ptr(string s, int n, int k) {
         }
     }
 
-    ptr = vector<int>(n + 1);
+    ptr = vector<int>(n + 1, INT32_MAX);
     ptr[1] = first;
     for (int i = 2; i < n - c + 2; ++i) {
         int offset = (int) s[i - 1 + c] - CHAR_OFFSET;
@@ -86,9 +86,9 @@ void build_ptr(string s, int n, int k) {
     }
 }
 
-void build_nxt(string s, int n) {
+// s must be pseudo-one indexed, i.e. s[0] should be a dummy character
+void build_nxt(int n) {
     nxt = vector<int>(n + 1, INT32_MAX);
-
     unordered_map<int, int> ptr_to_i;
 
     for (int i = n; i > 0; --i) {
@@ -101,10 +101,14 @@ void build_nxt(string s, int n) {
 }
 
 // s must be pseudo-one indexed, i.e. s[0] should be a dummy character
-bool has_square(string s) {
-    int n = s.length() - 1;
-    int l = 1;
+bool has_square(string s, int n) {
+    for (int i = 1; i < n - c + 2; ++i) {
+        if (is_square[ptr[i]]) {
+            return true;
+        }
+    }
 
+    int l = 1;
     while ((2*l - 1) <= n / 2) {
         for (int i = 1; i <= n - 3*l + 2; i += l) {
 
@@ -194,9 +198,9 @@ int main()
         }
  
         build_ptr(s, n, alphabet_size);
-        build_nxt(s, n);
+        build_nxt(n);
 
-        if (has_square(s)) {
+        if (has_square(s, n)) {
             cout << "YES";
         } else {
             cout << "NO";

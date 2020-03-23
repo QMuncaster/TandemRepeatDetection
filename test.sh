@@ -25,8 +25,8 @@ do
     # echo "running comparison standard"
     $STD_EXE < $f > ${STD_DIR}${file}.out
 
-    # echo "diffing"
-    diff ${IMP_DIR}${file}.out ${STD_DIR}${file}.out
+    # echo "printing disagreements"
+    paste -d ':' ${IMP_DIR}${file}.out ${STD_DIR}${file}.out | grep -nvE "YES:YES|NO:NO"
 
     echo "no_count/total = \c"
     no_count=$(grep -c "NO" ${IMP_DIR}${file}.out)
