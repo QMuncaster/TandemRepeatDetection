@@ -4,16 +4,16 @@ g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.o tr.cpp
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_fast.o tr_fast.cpp
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.o tr_bf.cpp
 
+IMP_EXE=${1:-"tr.o"}
+
 cd "tests/"
-FILES="$(ls -v in/*.in)"
-
-IMP_DIR="out/"
-# IMP_EXE="../tr.o"
-IMP_EXE="../tr_fast.o"
-
-STD_DIR="std/"
+IMP_EXE="../$IMP_EXE"
 STD_EXE="../tr_bf.o"
 
+IMP_DIR="out/"
+STD_DIR="std/"
+
+FILES="$(ls -v in/*.in)"
 for f in $FILES
 do
     file="$(basename $f .in)"

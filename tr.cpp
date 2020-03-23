@@ -78,7 +78,8 @@ int main()
     ios_base::sync_with_stdio(false); cin.tie(NULL);
 
     int num_words, alphabet_size;
-    cin >> num_words >> alphabet_size;
+    char base;
+    cin >> num_words >> base >> alphabet_size;
 
     string pseudosentence;
     getline(cin, pseudosentence);
@@ -108,21 +109,21 @@ g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_fast.o tr_fast.cpp
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.o tr_bf.cpp
 
 YES EXAMPLES
-4 26
+4 a 26
 abcabab
 eabaebae
 abcabsabs
 xzyabcdabcd
 
 NO EXAMPLES
-4 26
+4 a 26
 eabaebad
 abcabsabr
 asdfghjklxlkjhgfdsa
 oiusoiuoikdajfoiuwqrgqiglukdsjfkldsa
 
 in:
-4 4
+4 a 4
 dbadc
 bbbda
 bcadc

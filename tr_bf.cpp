@@ -30,7 +30,8 @@ int main()
     ios_base::sync_with_stdio(false); cin.tie(NULL);
 
     int num_words, alphabet_size;
-    cin >> num_words >> alphabet_size;
+    char base;
+    cin >> num_words >> base >> alphabet_size;
 
     string pseudosentence;
     getline(cin, pseudosentence);

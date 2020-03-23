@@ -17,10 +17,8 @@ g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_fast.o tr_fast.cpp
 8
 */
 
-// TODO: change to +33
-// will assume chars start at "!", so will have to fix/remove some of the test files
-const int CHAR_OFFSET = 97;
 const double ALPHA = 0.99;
+int CHAR_OFFSET = 97;
 int c;
 int kPowc;
 vector<string> table;   // 0-indexed
@@ -268,7 +266,9 @@ int main()
     ios_base::sync_with_stdio(false); cin.tie(NULL);
 
     int num_words, alphabet_size;
-    cin >> num_words >> alphabet_size;
+    char base;
+    cin >> num_words >> base >> alphabet_size;
+    CHAR_OFFSET = (int) base;
 
     string pseudosentence;
     getline(cin, pseudosentence);

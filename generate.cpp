@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 
     if (argc == 1) {
         cout << "Usage: ./generate.out num_words word_length alphabet_size\n"
+                "Uses random ASCII chars starting with !\n"
                 "Max alphabet size is 94\n"
                 "Proceeding with defaults\n\n";
     }       
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
         if (alphabet_size > 94) return 1;
     }
 
-    cout << N << ' ' << alphabet_size;
+    cout << N << " ! " << alphabet_size;
     for (int i = 0; i < N; ++i) {
         string out;
         for (int c = 0; c < str_length; ++c) {

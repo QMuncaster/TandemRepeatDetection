@@ -1,8 +1,8 @@
 # Generates test input for 2 long square free words
 
-print'2 3'
+print'2 A 3'
 
-n=10**6 # word length
+n=10**7 # word length
 
 # SOURCE: https://codegolf.stackexchange.com/a/10606
 # Generates squarefree word using difference of thue-morse sequence
