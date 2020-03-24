@@ -5,18 +5,6 @@
 #include <unordered_map>
 using namespace std;
 
-/*
-1 6
-efbcabcdefabcdef
-
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_fast.o tr_fast.cpp
-./tr_fast.o < temp
-
-29
-31
-8
-*/
-
 const double ALPHA = 0.99;
 int CHAR_OFFSET = 97;
 int c;
@@ -252,7 +240,6 @@ bool has_square(string s, int n) {
                 }
 
                 if (prefix_match_length + suffix_match_length >= k - i - l) {
-                    cout << s.substr(k, l) << endl;
                     return true;
                 }
             }

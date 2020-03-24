@@ -3,7 +3,8 @@
         "iostream": "cpp",
         "cmath": "cpp",
         "ostream": "cpp",
-        "tuple": "cpp"
+        "tuple": "cpp",
+        "vector": "cpp"
     },
     "files.exclude": {
         "*.o": true,

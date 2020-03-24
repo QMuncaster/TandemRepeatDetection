@@ -1,8 +1,8 @@
 #!/bin/sh
 
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr.o tr.cpp
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_fast.o tr_fast.cpp
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o tr_bf.o tr_bf.cpp
+g++ -W -Wall -pedantic --std=c++17 -O3 -o tr.o tr.cpp
+g++ -W -Wall -pedantic --std=c++17 -O3 -o tr_fast.o tr_fast.cpp
+g++ -W -Wall -pedantic --std=c++17 -O3 -o tr_bf.o tr_bf.cpp
 
 IMP_EXE=${1:-"tr.o"}
 
