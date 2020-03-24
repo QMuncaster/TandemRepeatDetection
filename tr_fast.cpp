@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string>
 #include <unordered_map>
+#include <time.h>
 using namespace std;
 
 const double ALPHA = 0.99;
@@ -251,7 +252,7 @@ bool has_square(string s, int n) {
 
 int main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(NULL);
+    // ios_base::sync_with_stdio(false); cin.tie(NULL);
 
     int num_words, alphabet_size;
     char base;
@@ -265,24 +266,63 @@ int main()
         string zeroIndString;
         getline (cin, zeroIndString);
 
+        time_t prev_timer, timer;
+        time(&prev_timer);
+        double seconds;
+
         string s = "$";
         s.append(zeroIndString);
         int n = s.length() - 1;
+
+        time(&timer);
+        cout << endl;
+        seconds = difftime(timer,prev_timer);
+        printf ("%.2f ", seconds);
+        cout << "finished appending\n";
+        time(&prev_timer);
 
         if (word == 0) {
             build_table(n, alphabet_size);
         } else {
             cout << '\n';
         }
+
+        time(&timer);
+        seconds = difftime(timer,prev_timer);
+        printf ("%.2f ", seconds);
+        cout << "finished building table\n";
+        time(&prev_timer);
  
         build_ptr(s, n, alphabet_size);
+
+        time(&timer);
+        seconds = difftime(timer,prev_timer);
+        printf ("%.2f ", seconds);
+        cout << "finished building ptr\n";
+        time(&prev_timer);
+
         build_nxt(n);
+
+        time(&timer);
+        seconds = difftime(timer,prev_timer);
+        printf ("%.2f ", seconds);
+        cout << "finished building nxt\n";
+        time(&prev_timer);
 
         if (has_square(s, n)) {
             cout << "YES";
         } else {
             cout << "NO";
         }
+        time(&timer);
+        seconds = difftime(timer,prev_timer);
+        cout << '\n';
+        printf ("%.2f ", seconds);
+        cout << "finished running has_square\n";
+        time(&prev_timer);
+
+        
+
     }
 
     return 0;
