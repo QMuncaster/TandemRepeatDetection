@@ -1,8 +1,12 @@
+#!/usr/bin/python
+
 # Generates test input for 2 long square free words
+
+import sys
 
 print'2 A 3'
 
-n=10**7 # word length
+n=int(sys.argv[1])
 
 # SOURCE: https://codegolf.stackexchange.com/a/10606
 # Generates squarefree word using difference of thue-morse sequence

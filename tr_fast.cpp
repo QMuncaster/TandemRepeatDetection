@@ -222,7 +222,7 @@ bool has_square(string s, int n) {
                         lhp -= c;
                         rhp -= c;
 
-                    } else if (s[lhp] == s[rhp]) {
+                    } else if (s[lhp + c - 1] == s[rhp + c - 1]) {
                         suffix_match_length++;
                         lhp--;
                         rhp--;
@@ -252,6 +252,7 @@ bool has_square(string s, int n) {
                 }
 
                 if (prefix_match_length + suffix_match_length >= k - i - l) {
+                    cout << s.substr(k, l) << endl;
                     return true;
                 }
             }

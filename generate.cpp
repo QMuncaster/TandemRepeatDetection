@@ -4,7 +4,6 @@
 #include <string>
 using namespace std;
 
-
 /*
 g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o generate.o generate.cpp
 */
