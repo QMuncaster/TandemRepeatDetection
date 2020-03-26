@@ -6,6 +6,7 @@
 using namespace std;
 typedef long long ll;
 
+const long double EPS = 1e-8;
 const double ALPHA = 0.99;
 int CHAR_OFFSET = 97;
 ll c;
@@ -40,14 +41,30 @@ bool has_square_slow(string s) {
 void build_table(ll n, ll k) {
     c = ceil(log(pow(n, ALPHA)) / log(k));
 
-    kPowc = pow(k, c);
+    kPowc = pow(k, c) + EPS;
     table = vector<string>(kPowc, "");
 
-    for (ll group_sz = pow(k, c - 1); group_sz > 0; group_sz = group_sz / k) {
-        for (ll i = 0; i < kPowc; ++i) {
-            ll group = (i / group_sz) % k;
-            table[i] += (char) group + CHAR_OFFSET; 
+    // // Slow
+    // for (ll group_sz = pow(k, c - 1); group_sz > 0; group_sz = group_sz / k) {
+    //     for (ll i = 0; i < kPowc; ++i) {
+    //         ll group = (i / group_sz) % k;
+    //         table[i] += (char) group + CHAR_OFFSET; 
+    //     }
+    // }
+
+    ll group_sz_first = pow(k, c - 1) + EPS;
+    ll repeats = 1;
+    for (ll group_sz = group_sz_first; group_sz > 0; group_sz = group_sz / k) {
+        for (int r = 0; r < repeats; ++r) { // repeats of groups
+            for (int c = 0; c < k; ++c) {
+                char to_append = c + CHAR_OFFSET;
+
+                for (int i = 0; i < group_sz; ++i) {
+                    table[r * group_sz * k + c * group_sz + i] += to_append; 
+                }
+            }
         }
+        repeats = repeats * k;
     }
 
     for (ll i = 0; i < kPowc; ++i) {
