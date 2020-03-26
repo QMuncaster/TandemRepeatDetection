@@ -11,6 +11,7 @@ This project implements [Main & Lorentz's (1985)](https://doi.org/10.1007/978-3-
 | tr_fast.o     | O(n)             | Speedup to above through preprocessing |
 | tr_bf.o       | O(n<sup>2</sup>) | Naive approach for comparison |
 
+## Input Format
 Each executable reads data from stdin following this format:
 ```
 num_tests start_char alphabet_size
@@ -30,7 +31,7 @@ Note the following input requirements, which are not validated but must be follo
 - The alphabet size should be defined so that the largest character doesn't go beyond "~"
 
 ## Scripts
-All testing scripts can be run using `bash test_script_name.sh`.
+All testing scripts can be run using `bash test_scripts/test_script_name.sh`.
 
 | Script                  | Description | Optional Argument  |
 | ------------------------| ------------| -------------------|
