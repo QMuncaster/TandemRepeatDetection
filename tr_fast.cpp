@@ -5,24 +5,25 @@
 #include <unordered_map>
 #include <time.h>
 using namespace std;
+typedef long long ll;
 
 const double ALPHA = 0.99;
 int CHAR_OFFSET = 97;
-int c;
-int kPowc;
+ll c;
+ll kPowc;
 vector<string> table;   // 0-indexed
 vector<bool> is_square; // 0-indexed
-vector<int> ptr; // 1-indexed
-vector<int> nxt; // 1-indexed
+vector<ll> ptr; // 1-indexed
+vector<ll> nxt; // 1-indexed
 
 // 0-indexed string s
 // O(n^2)
 bool has_square_slow(string s) {
-    int n = s.length();
-    for (int i = 1; i <= n/2; ++i) {
+    ll n = s.length();
+    for (ll i = 1; i <= n/2; ++i) {
 
-        int count_matched = 0;
-        for (int j = i; j < n; ++j) {
+        ll count_matched = 0;
+        for (ll j = i; j < n; ++j) {
             if (s[j] == s[j - i]) {
                 count_matched++;
 
@@ -37,47 +38,47 @@ bool has_square_slow(string s) {
     return false;
 }
 
-void build_table(int n, int k) {
+void build_table(ll n, ll k) {
     c = ceil(log(pow(n, ALPHA)) / log(k));
 
     kPowc = pow(k, c);
     table = vector<string>(kPowc, "");
 
-    for (int group_sz = pow(k, c - 1); group_sz > 0; group_sz = group_sz / k) {
-        for (int i = 0; i < kPowc; ++i) {
-            int group = (i / group_sz) % k;
+    for (ll group_sz = pow(k, c - 1); group_sz > 0; group_sz = group_sz / k) {
+        for (ll i = 0; i < kPowc; ++i) {
+            ll group = (i / group_sz) % k;
             table[i] += (char) group + CHAR_OFFSET; 
         }
     }
 
-    for (int i = 0; i < kPowc; ++i) {
+    for (ll i = 0; i < kPowc; ++i) {
         is_square.push_back(has_square_slow(table[i]));
     }
 }
 
 // s must be pseudo-one indexed, i.e. s[0] should be a dummy character
-void build_ptr(string s, int n, int k) {
-    int first = 0;
-    for (int i = 0; i < kPowc; ++i) {
+void build_ptr(string s, ll n, ll k) {
+    ll first = 0;
+    for (ll i = 0; i < kPowc; ++i) {
         if (s.substr(1, c) == table[i]) {
             first = i;
             break;
         }
     }
 
-    ptr = vector<int>(n + 1, INT32_MAX);
+    ptr = vector<ll>(n + 1, INT32_MAX);
     ptr[1] = first;
-    for (int i = 2; i < n - c + 2; ++i) {
-        int offset = (int) s[i - 1 + c] - CHAR_OFFSET;
+    for (ll i = 2; i < n - c + 2; ++i) {
+        ll offset = (ll) s[i - 1 + c] - CHAR_OFFSET;
         ptr[i] = (k * ptr[i - 1] + offset) % kPowc;
     }
 }
 
-void build_nxt(int n) {
-    nxt = vector<int>(n + 1, INT32_MAX);
-    unordered_map<int, int> ptr_to_i;
+void build_nxt(ll n) {
+    nxt = vector<ll>(n + 1, INT32_MAX);
+    unordered_map<ll, ll> ptr_to_i;
 
-    for (int i = n; i > 0; --i) {
+    for (ll i = n; i > 0; --i) {
         if (ptr_to_i.count(ptr[i])) {
             nxt[i] = ptr_to_i[ptr[i]];
         }
@@ -87,16 +88,16 @@ void build_nxt(int n) {
 }
 
 // s must be pseudo-one indexed, i.e. s[0] should be a dummy character
-bool has_square_one_it(string s, int n, int l) {
+bool has_square_one_it(string s, ll n, ll l) {
     if (l < 1) return false;
 
-    for (int i = 1; i <= n - 3*l + 2; i += l) {
+    for (ll i = 1; i <= n - 3*l + 2; i += l) {
 
-        vector<int> repeats;
+        vector<ll> repeats;
         string block = s.substr(i, l);
-        int block_matches = 0;
+        ll block_matches = 0;
 
-        for (int pos = i + 2*l - 1; pos < i + 5*l - 2; ++pos) {
+        for (ll pos = i + 2*l - 1; pos < i + 5*l - 2; ++pos) {
             if (pos > n) break;
 
             if (s[pos] == block[block_matches]) {
@@ -113,11 +114,11 @@ bool has_square_one_it(string s, int n, int l) {
         }
 
         for (size_t j = 0; j < repeats.size(); ++j) {
-            int k = repeats[j];
+            ll k = repeats[j];
 
-            int suffix_match_length = 0;
-            int lhp = i - 1;
-            int rhp = k - 1;
+            ll suffix_match_length = 0;
+            ll lhp = i - 1;
+            ll rhp = k - 1;
             while (lhp > 0 && rhp > i + l - 1) {
                 if (s[lhp] == s[rhp]) {
                     suffix_match_length++;
@@ -129,7 +130,7 @@ bool has_square_one_it(string s, int n, int l) {
                 }
             }
 
-            int prefix_match_length = 0;
+            ll prefix_match_length = 0;
             lhp = i + l;
             rhp = k + l;
             while (rhp <= n && lhp < k) {
@@ -152,8 +153,8 @@ bool has_square_one_it(string s, int n, int l) {
 }
 
 // s must be pseudo-one indexed, i.e. s[0] should be a dummy character
-bool has_square(string s, int n) {
-    for (int i = 1; i < n - c + 2; ++i) {
+bool has_square(string s, ll n) {
+    for (ll i = 1; i < n - c + 2; ++i) {
         if (is_square[ptr[i]]) {
             return true;
         }
@@ -162,15 +163,15 @@ bool has_square(string s, int n) {
     if (has_square_one_it(s, n, c / 4)) return true;
     if (has_square_one_it(s, n, c / 2)) return true;
 
-    int l = c;
+    ll l = c;
     while ((2*l - 1) <= n / 2) {
-        for (int i = 1; i <= n - 3*l + 2; i += l) {
+        for (ll i = 1; i <= n - 3*l + 2; i += l) {
 
-            vector<int> repeats;
+            vector<ll> repeats;
             string block = s.substr(i, l);
 
             // first re-appearance of c in [i + 2l - 1, i + 4l - 2]
-            int f = i;
+            ll f = i;
             while (f < i + 2*l - 1) {
                 f = nxt[f];
             }
@@ -178,8 +179,8 @@ bool has_square(string s, int n) {
 
             while (f <= i + 4*l - 2) {
                 // check if matches block in chunks of c
-                int matches = c;
-                int f_block = f + c;
+                ll matches = c;
+                ll f_block = f + c;
                 while (matches < l) {
                     if (ptr[f] == ptr[i + matches]) {
                         f_block += c;
@@ -200,11 +201,11 @@ bool has_square(string s, int n) {
             }
 
             for (size_t j = 0; j < repeats.size(); ++j) {
-                int k = repeats[j];
+                ll k = repeats[j];
 
-                int suffix_match_length = 0;
-                int lhp = i - c;
-                int rhp = k - c;
+                ll suffix_match_length = 0;
+                ll lhp = i - c;
+                ll rhp = k - c;
                 while (lhp > 0 && rhp > i + l - 1) {
                     if (ptr[lhp] == ptr[rhp]) {
                         suffix_match_length += c;
@@ -221,7 +222,7 @@ bool has_square(string s, int n) {
                     }
                 }
 
-                int prefix_match_length = 0;
+                ll prefix_match_length = 0;
                 lhp = i + l;
                 rhp = k + l;
                 while (rhp <= n && lhp < k) {
@@ -254,15 +255,15 @@ int main()
 {
     // ios_base::sync_with_stdio(false); cin.tie(NULL);
 
-    int num_words, alphabet_size;
+    ll num_words, alphabet_size;
     char base;
     cin >> num_words >> base >> alphabet_size;
-    CHAR_OFFSET = (int) base;
+    CHAR_OFFSET = (ll) base;
 
     string pseudosentence;
     getline(cin, pseudosentence);
 
-    for (int word = 0; word < num_words; ++word) {
+    for (ll word = 0; word < num_words; ++word) {
         string zeroIndString;
         getline (cin, zeroIndString);
 
@@ -272,12 +273,12 @@ int main()
 
         string s = "$";
         s.append(zeroIndString);
-        int n = s.length() - 1;
+        ll n = s.length() - 1;
 
         time(&timer);
         cout << endl;
         seconds = difftime(timer,prev_timer);
-        printf ("%.2f ", seconds);
+        printf ("%.f ", seconds);
         cout << "finished appending\n";
         time(&prev_timer);
 
@@ -289,15 +290,24 @@ int main()
 
         time(&timer);
         seconds = difftime(timer,prev_timer);
-        printf ("%.2f ", seconds);
+        printf ("%.f ", seconds);
         cout << "finished building table\n";
         time(&prev_timer);
  
         build_ptr(s, n, alphabet_size);
 
+        // for (size_t i = 0; i < ptr.size(); ++i) {
+        //     if (ptr[i] < 0 || (ptr[i] > table.size() - 1 && ptr[i] != INT32_MAX)) {
+        //         cout << ptr[i] << endl;
+        //         cout << "WTF" << endl;
+        //         return 1;
+        //     }
+        // }
+
+
         time(&timer);
         seconds = difftime(timer,prev_timer);
-        printf ("%.2f ", seconds);
+        printf ("%.f ", seconds);
         cout << "finished building ptr\n";
         time(&prev_timer);
 
@@ -305,7 +315,7 @@ int main()
 
         time(&timer);
         seconds = difftime(timer,prev_timer);
-        printf ("%.2f ", seconds);
+        printf ("%.f ", seconds);
         cout << "finished building nxt\n";
         time(&prev_timer);
 
@@ -317,7 +327,7 @@ int main()
         time(&timer);
         seconds = difftime(timer,prev_timer);
         cout << '\n';
-        printf ("%.2f ", seconds);
+        printf ("%.f ", seconds);
         cout << "finished running has_square\n";
         time(&prev_timer);
 
