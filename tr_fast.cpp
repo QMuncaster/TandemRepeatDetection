@@ -2,7 +2,6 @@
 #include <vector>
 #include <math.h>
 #include <string>
-#include <unordered_map>
 #include <time.h>
 using namespace std;
 typedef long long ll;
@@ -66,7 +65,7 @@ void build_ptr(string s, ll n, ll k) {
         }
     }
 
-    ptr = vector<ll>(n + 1, INT32_MAX);
+    ptr = vector<ll>(n + 1, INT64_MAX);
     ptr[1] = first;
     for (ll i = 2; i < n - c + 2; ++i) {
         ll offset = (ll) s[i - 1 + c] - CHAR_OFFSET;
@@ -75,15 +74,14 @@ void build_ptr(string s, ll n, ll k) {
 }
 
 void build_nxt(ll n) {
-    nxt = vector<ll>(n + 1, INT32_MAX);
-    unordered_map<ll, ll> ptr_to_i;
+    nxt = vector<ll>(n + 1, INT64_MAX);
+    vector<ll> ptr_to_i(kPowc, INT64_MAX);
 
     for (ll i = n; i > 0; --i) {
-        if (ptr_to_i.count(ptr[i])) {
+        if (ptr[i] != INT64_MAX) {
             nxt[i] = ptr_to_i[ptr[i]];
+            ptr_to_i[ptr[i]] = i; 
         }
-
-        ptr_to_i[ptr[i]] = i;
     }
 }
 
@@ -298,7 +296,7 @@ int main()
         build_ptr(s, n, alphabet_size);
 
         // for (size_t i = 0; i < ptr.size(); ++i) {
-        //     if (ptr[i] < 0 || (ptr[i] > table.size() - 1 && ptr[i] != INT32_MAX)) {
+        //     if (ptr[i] < 0 || (ptr[i] > table.size() - 1 && ptr[i] != INT64_MAX)) {
         //         cout << ptr[i] << endl;
         //         cout << "WTF" << endl;
         //         return 1;
