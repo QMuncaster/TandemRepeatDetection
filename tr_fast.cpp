@@ -182,7 +182,7 @@ bool has_square(string s, ll n) {
                 ll matches = c;
                 ll f_block = f + c;
                 while (matches < l) {
-                    if (ptr[f] == ptr[i + matches]) {
+                    if (ptr[f_block] == ptr[i + matches]) {
                         f_block += c;
                         matches += c;
 
@@ -195,7 +195,8 @@ bool has_square(string s, ll n) {
                 }
 
                 // repeat for next occurrence
-                while (f <= f_block) {
+                // minus c as mismatch not necessarily at end of f_block
+                while (f <= f_block - c) {
                     f = nxt[f];
                 }
             }
