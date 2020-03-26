@@ -4,9 +4,6 @@
 #include <string>
 using namespace std;
 
-/*
-g++ -W -Wall -pedantic --std=c++17 -ggdb3 -o generate.o generate.cpp
-*/
 int main(int argc, char *argv[])
 {
     int N = 20;
