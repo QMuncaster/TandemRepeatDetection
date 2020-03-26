@@ -26,12 +26,17 @@ The alphabet is defined as the alphabet_size ASCII characters beginning from the
 For example, start_char = 'a' and alphabet_size = 4 gives an alphabet of {'a', 'b', 'c', 'd'}.
 
 Note the following input requirements, which are not validated but must be followed:
-- All query strings must only use characters from the alphabet
-- The smallest allowed start_char is "!"
-- The alphabet size should be defined so that the largest character doesn't go beyond "~"
+* All query strings must only use characters from the alphabet
+* The smallest allowed start_char is "!"
+* The alphabet size should be defined so that the largest character doesn't go beyond "~"
 
 ## Scripts
-All testing scripts can be run using `bash test_scripts/test_script_name.sh`.
+All testing scripts can be run using:
+```
+bash test_scripts/test.sh
+bash test_scripts/test_manual.sh
+bash test_scripts/test_time_complexity.sh
+```
 
 | Script                  | Description | Optional Argument  |
 | ------------------------| ------------| -------------------|
