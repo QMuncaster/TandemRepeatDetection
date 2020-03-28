@@ -39,8 +39,8 @@ bool has_square_slow(string s) {
 }
 
 void build_table(ll n, ll k) {
-    c = ceil(log(pow(n, ALPHA)) / log(k));
 
+    c = ceil(log(pow(n, ALPHA)) / log(k) + EPS);
     kPowc = pow(k, c) + EPS;
     table = vector<string>(kPowc, "");
 
@@ -210,8 +210,7 @@ bool has_square(string s, ll n) {
                 }
 
                 // repeat for next occurrence
-                // minus c as mismatch not necessarily at end of f_block
-                while (f <= f_block - c) {
+                while (f <= f_block) {
                     f = nxt[f];
                 }
             }
@@ -296,7 +295,7 @@ int main()
         build_ptr(s, n, alphabet_size);
         build_nxt(n);
 
-        if (has_square(s, n)) {
+        if (n > 1 && has_square(s, n)) {
             cout << "YES";
         } else {
             cout << "NO";
